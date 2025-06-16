@@ -19,9 +19,10 @@
 - [🎨 Personalizzazione](#-personalizzazione)
 - [🧪 Testing](#-testing)
 - [🚀 Deployment](#-deployment)
+- [🐛 Troubleshooting](#-troubleshooting)
+- [👨🏻‍🎓 Segnala Bug](#-segnalare-bug)
 - [🤝 Contribuire](#-contribuire)
 - [📄 Licenza](#-licenza)
-- [📞 Supporto](#-supporto)
 
 ![Heat Map dei Rischi](./screenshots/heat_map_dei_rischi.png)
 
@@ -62,12 +63,6 @@ Il **Risk Assessment Dashboard** è una soluzione completa per la gestione quant
 - **Dark/Light Theme**: Interfaccia responsive ottimizzata
 - **Performance Optimized**: Gestione efficiente di dataset di grandi dimensioni
 - **Accessibility**: Conforme alle linee guida WCAG 2.1
-
-## 🚀 Demo e Anteprima
-
-![Heat Map dei Rischi - Anteprima](./screenshots/heatmap_2025.png)
-
-*Heat Map interattiva che visualizza i rischi su matrice probabilità/impatto con codifica colore per livelli di priorità*
 
 ### Funzionalità Demo
 - ✅ Visualizzazione rischi in tempo reale
