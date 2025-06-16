@@ -373,7 +373,7 @@ Accogliamo contributi dalla community!
 
 ### Segnalare Bug
 
-Usa [GitHub Issues](https://github.com/tuousername/risk-assessment-dashboard/issues) con:
+Usa [GitHub Issues](https://github.com/tuousername/risk_insight/issues) con:
 - Descrizione dettagliata del problema
 - Steps per riprodurre
 - Environment (OS, Python version, browser)
@@ -415,7 +415,7 @@ streamlit run risk_dashboard.py --logger.level=debug
 Questo progetto è distribuito sotto **Licenza MIT**. Vedi file [LICENSE](LICENSE) per dettagli completi.
 
 ```
-MIT License - Copyright (c) 2025 Your Name
+MIT License - Copyright (c) 2025 rstarttt
 
 Permission is hereby granted, free of charge, to any person obtaining a copy...
 ```
