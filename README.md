@@ -3,7 +3,6 @@
 [![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.32.0+-red.svg)](https://streamlit.io/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Maintenance](https://img.shields.io/badge/Maintained-yes-green.svg)](https://github.com/tuousername/risk-assessment-dashboard/graphs/commit-activity)
 
 **Una soluzione enterprise-grade per la gestione e valutazione quantitativa dei rischi di progetto, sviluppata con architettura moderna e interfaccia intuitiva.**
 
