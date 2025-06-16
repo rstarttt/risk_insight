@@ -379,26 +379,6 @@ Usa [GitHub Issues](https://github.com/tuousername/risk-assessment-dashboard/iss
 - Environment (OS, Python version, browser)
 - Screenshot se applicabile
 
-## 📈 Roadmap
-
-### Versione 2.0 (Q3 2025)
-- [ ] **Multi-tenancy**: Supporto organizzazioni multiple
-- [ ] **API REST**: Integrazione sistemi esterni
-- [ ] **Real-time notifications**: Alert automatici
-- [ ] **Advanced analytics**: Machine learning insights
-
-### Versione 2.1 (Q4 2025)
-- [ ] **Mobile app**: App nativa iOS/Android
-- [ ] **Workflow engine**: Automazione processi
-- [ ] **Advanced reporting**: Report personalizzabili
-- [ ] **Integration hub**: Connettori JIRA, Slack, Teams
-
-### Versione 3.0 (2026)
-- [ ] **AI-powered**: Predizioni rischio automatiche
-- [ ] **Blockchain**: Audit trail immutabile
-- [ ] **Enterprise SSO**: Integration LDAP/SAML
-- [ ] **Global deployment**: Multi-region support
-
 ## 🐛 Troubleshooting
 
 ### Problemi Comuni
