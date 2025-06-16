@@ -450,9 +450,6 @@ Permission is hereby granted, free of charge, to any person obtaining a copy...
 
 **⭐ Se questo progetto ti è stato utile, lascia una stella su GitHub! ⭐**
 
-[📖 **DOCUMENTAZIONE**](https://github.com/tuousername/risk-assessment-dashboard/wiki) | 
-[🐛 **SEGNALA BUG**](https://github.com/tuousername/risk-assessment-dashboard/issues)
-
 ---
 
 **Risk Assessment Dashboard** • Gestione Professionale dei Rischi di Progetto  
