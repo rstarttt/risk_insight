@@ -3,7 +3,6 @@
 [![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.32.0+-red.svg)](https://streamlit.io/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Code Quality](https://img.shields.io/badge/Code%20Quality-A+-brightgreen.svg)](https://github.com/tuousername/risk-assessment-dashboard)
 [![Maintenance](https://img.shields.io/badge/Maintained-yes-green.svg)](https://github.com/tuousername/risk-assessment-dashboard/graphs/commit-activity)
 
 **Una soluzione enterprise-grade per la gestione e valutazione quantitativa dei rischi di progetto, sviluppata con architettura moderna e interfaccia intuitiva.**
@@ -12,7 +11,6 @@
 
 - [🎯 Overview](#-overview)
 - [✨ Caratteristiche](#-caratteristiche)
-- [🚀 Demo e Anteprima](#-demo-e-anteprima)
 - [⚙️ Requisiti di Sistema](#️-requisiti-di-sistema)
 - [📦 Installazione](#-installazione)
 - [🔧 Configurazione e Utilizzo](#-configurazione-e-utilizzo)
@@ -24,6 +22,8 @@
 - [🤝 Contribuire](#-contribuire)
 - [📄 Licenza](#-licenza)
 - [📞 Supporto](#-supporto)
+
+![Heat Map dei Rischi](./screenshots/heat_map_dei_rischi.png)
 
 ## 🎯 Overview
 
