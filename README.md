@@ -443,7 +443,7 @@ Permission is hereby granted, free of charge, to any person obtaining a copy...
 ## 👨‍💻 Autore e Crediti
 
 **rstarttt**
-- 🐙 GitHub: [@tuousername](https://github.com/rstarttt)
+- 🐙 GitHub: [@rstarttt](https://github.com/rstarttt)
 - 📧 Email: rstart@outlook.it
 
 <div align="center">
@@ -456,6 +456,6 @@ Permission is hereby granted, free of charge, to any person obtaining a copy...
 ---
 
 **Risk Assessment Dashboard** • Gestione Professionale dei Rischi di Progetto  
-*Developed with ❤️ by [Your Name](https://github.com/rstarttt)*
+*Developed with ❤️ by [rstarttt](https://github.com/rstarttt)*
 
 </div>
