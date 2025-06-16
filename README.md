@@ -65,7 +65,7 @@ Il **Risk Assessment Dashboard** è una soluzione completa per la gestione quant
 
 ## 🚀 Demo e Anteprima
 
-![Risk Assessment Dashboard - Heat Map dei Rischi](screenshots/heatmap_preview.png)
+![Heat Map dei Rischi - Anteprima](./screenshots/heatmap_2025.png)
 
 *Heat Map interattiva che visualizza i rischi su matrice probabilità/impatto con codifica colore per livelli di priorità*
 
