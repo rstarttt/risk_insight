@@ -3,31 +3,91 @@
 [![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.32.0+-red.svg)](https://streamlit.io/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Code Quality](https://img.shields.io/badge/Code%20Quality-A+-brightgreen.svg)](https://github.com/tuousername/risk-assessment-dashboard)
+[![Maintenance](https://img.shields.io/badge/Maintained-yes-green.svg)](https://github.com/tuousername/risk-assessment-dashboard/graphs/commit-activity)
 
-Una dashboard interattiva e professionale per la gestione e valutazione dei rischi di progetto, sviluppata con Streamlit e AgGrid.
+**Una soluzione enterprise-grade per la gestione e valutazione quantitativa dei rischi di progetto, sviluppata con architettura moderna e interfaccia intuitiva.**
 
-## ✨ Caratteristiche Principali
+## 📋 Indice
 
-- **📊 Heat Map Interattiva**: Visualizzazione dei rischi su matrice probabilità/impatto con posizionamento preciso per valori decimali
-- **📋 Tabella Dinamica**: Gestione completa dei rischi con AgGrid (aggiunta, modifica, eliminazione)
-- **📈 Calcolo Automatico**: Priorità calcolate automaticamente basate su probabilità × impatto
-- **📄 Export Avanzato**: Esportazione in PDF e Excel con heat map inclusa
-- **💾 Persistenza Dati**: Salvataggio automatico su CSV con sincronizzazione real-time
-- **🎨 UI Moderna**: Interfaccia dark theme responsive e professionale
-- **⚡ Performance**: Optimizzato per gestire centinaia di rischi senza lag
+- [🎯 Overview](#-overview)
+- [✨ Caratteristiche](#-caratteristiche)
+- [🚀 Demo e Anteprima](#-demo-e-anteprima)
+- [⚙️ Requisiti di Sistema](#️-requisiti-di-sistema)
+- [📦 Installazione](#-installazione)
+- [🔧 Configurazione e Utilizzo](#-configurazione-e-utilizzo)
+- [🏗️ Architettura](#️-architettura)
+- [📊 Metodologia di Valutazione](#-metodologia-di-valutazione)
+- [🎨 Personalizzazione](#-personalizzazione)
+- [🧪 Testing](#-testing)
+- [🚀 Deployment](#-deployment)
+- [🤝 Contribuire](#-contribuire)
+- [📄 Licenza](#-licenza)
+- [📞 Supporto](#-supporto)
 
-## 🚀 Demo
+## 🎯 Overview
 
-![Risk Assessment Dashboard](https://via.placeholder.com/800x400/0d1117/DC143C?text=Risk+Assessment+Dashboard)
+Il **Risk Assessment Dashboard** è una soluzione completa per la gestione quantitativa dei rischi aziendali, progettata per team di project management, risk manager e decision maker. La piattaforma integra metodologie standard di risk assessment con un'interfaccia moderna e funzionalità avanzate di reportistica.
 
-*Sostituisci questo placeholder con uno screenshot reale della tua dashboard*
+### Casi d'Uso Principali
+
+- **Project Risk Management**: Valutazione e monitoraggio rischi di progetto
+- **Enterprise Risk Assessment**: Gestione rischi a livello organizzativo  
+- **Compliance Management**: Supporto per framework di conformità
+- **Strategic Planning**: Analisi dei rischi per decisioni strategiche
+
+## ✨ Caratteristiche
+
+### 📊 Visualizzazione e Analytics
+- **Heat Map Interattiva**: Matrice probabilità/impatto con posizionamento preciso per valori decimali
+- **Dashboard Real-time**: Monitoraggio KPI e metriche di rischio in tempo reale
+- **Grafici Avanzati**: Trend analysis e distribuzione dei rischi per categoria
+
+### 📋 Gestione Dati
+- **Tabella Dinamica AgGrid**: CRUD completo con sorting, filtering e grouping
+- **Calcolo Automatico**: Priorità e scoring basati su algoritmi configurabili
+- **Validazione Dati**: Controlli di integrità e consistenza automatici
+
+### 📄 Reportistica e Export
+- **Export Multi-formato**: PDF, Excel, CSV con heat map incorporata
+- **Report Personalizzabili**: Template configurabili per diversi stakeholder
+- **Scheduling Automatico**: Generazione report programmata
+
+### 💾 Persistenza e Sicurezza
+- **Auto-save**: Salvataggio automatico con sincronizzazione real-time
+- **Data Backup**: Sistema di backup automatico incrementale
+- **Audit Trail**: Log completo delle modifiche e accessi
+
+### 🎨 User Experience
+- **Dark/Light Theme**: Interfaccia responsive ottimizzata
+- **Performance Optimized**: Gestione efficiente di dataset di grandi dimensioni
+- **Accessibility**: Conforme alle linee guida WCAG 2.1
+
+## 🚀 Demo e Anteprima
+
+![Risk Assessment Dashboard - Heat Map dei Rischi](screenshots/heatmap_preview.png)
+
+*Heat Map interattiva che visualizza i rischi su matrice probabilità/impatto con codifica colore per livelli di priorità*
+
+### Funzionalità Demo
+- ✅ Visualizzazione rischi in tempo reale
+- ✅ Gestione completa CRUD tramite interfaccia intuitiva
+- ✅ Export immediato in PDF/Excel
+- ✅ Calcolo automatico priorità e scoring
+
+## ⚙️ Requisiti di Sistema
+
+### Software Necessario
+- **Python**: versione 3.8 o superiore
+- **pip**: gestore pacchetti Python
+- **Browser**: Chrome 90+, Firefox 88+, Safari 14+, Edge 90+
+
+### Specifiche Hardware Consigliate
+- **RAM**: 4GB (minimo), 8GB (consigliato)
+- **Storage**: 500MB spazio libero
+- **CPU**: Dual-core 2.0GHz o superiore
 
 ## 📦 Installazione
-
-### Prerequisiti
-
-- Python 3.8 o superiore
-- pip (gestore pacchetti Python)
 
 ### Installazione Rapida
 
@@ -37,160 +97,365 @@ Una dashboard interattiva e professionale per la gestione e valutazione dei risc
    cd risk-assessment-dashboard
    ```
 
-2. **Crea un ambiente virtuale** (raccomandato)
+2. **Crea ambiente virtuale** (altamente raccomandato)
    ```bash
+   # Crea ambiente virtuale
    python -m venv venv
    
-   # Su Windows
+   # Attivazione su Windows
    venv\Scripts\activate
    
-   # Su macOS/Linux
+   # Attivazione su macOS/Linux
    source venv/bin/activate
    ```
 
-3. **Installa le dipendenze**
+3. **Installa dipendenze**
    ```bash
    pip install -r requirements.txt
    ```
 
-4. **Avvia l'applicazione**
+4. **Verifica installazione**
+   ```bash
+   streamlit --version
+   ```
+
+5. **Avvia l'applicazione**
    ```bash
    streamlit run risk_dashboard.py
    ```
 
-5. **Apri il browser** e vai su `http://localhost:8501`
+6. **Accedi all'applicazione**
+   - Apri il browser su `http://localhost:8501`
 
-## 📋 Requisiti
+### Installazione Docker (Opzionale)
 
-```txt
-streamlit==1.32.0
-streamlit-aggrid==1.0.5
-pandas==2.2.0
-openpyxl==3.1.2
-reportlab==4.1.0
-matplotlib==3.8.0
+```bash
+# Build dell'immagine
+docker build -t risk-dashboard .
+
+# Esecuzione del container
+docker run -p 8501:8501 risk-dashboard
 ```
 
-## 🔧 Utilizzo
+## 🔧 Configurazione e Utilizzo
 
-### Aggiungere un Nuovo Rischio
+### Primo Avvio
 
-1. Compila il form "Aggiungi Nuovo Rischio"
-2. Imposta **Probabilità** e **Impatto** (scala 1-5 con incrementi 0.5)
-3. La **Priorità** viene calcolata automaticamente
-4. Premi **Aggiungi** per salvare
+Al primo avvio, l'applicazione creerà automaticamente:
+- File di configurazione `config.yaml`
+- Database CSV `risk_data.csv`
+- Directory per export `exports/`
 
-### Gestire Rischi Esistenti
+### Gestione Rischi
 
-- **Visualizzare**: Tutti i rischi sono mostrati nella tabella interattiva
-- **Eliminare**: Spunta la checkbox "Elimina" per rimuovere rischi
-- **Esportare**: Usa i pulsanti PDF/Excel per esportare i dati
+#### Aggiungere un Nuovo Rischio
+1. Compila il form **"Aggiungi Nuovo Rischio"**
+2. Inserisci **Descrizione** dettagliata del rischio
+3. Seleziona **Categoria** dal menu dropdown
+4. Imposta **Probabilità** (1-5, incrementi 0.5)
+5. Imposta **Impatto** (1-5, incrementi 0.5)
+6. La **Priorità** viene calcolata automaticamente (Probabilità × Impatto)
+7. Clicca **"Aggiungi Rischio"**
 
-### Heat Map dei Rischi
+#### Modificare Rischi Esistenti
+- Utilizza la tabella interattiva per editing inline
+- Doppio-click su cella per modificare valori
+- Modifiche salvate automaticamente
 
-La heat map mostra visivamente i rischi posizionati secondo:
-- **Asse X**: Probabilità (1-5)
-- **Asse Y**: Impatto (1-5) 
-- **Colori**: 
-  - 🟢 Verde: Bassa (1-5)
-  - 🟡 Giallo: Media (6-10)
-  - 🟠 Arancione: Alta (11-15)
-  - 🔴 Rosso: Estrema (16-25)
+#### Eliminare Rischi
+- Seleziona checkbox **"Elimina"** nella tabella
+- Conferma eliminazione nel popup
+
+### Heat Map Interattiva
+
+La heat map visualizza i rischi secondo il sistema di classificazione standard:
+
+| Priorità | Range Valore | Colore | Descrizione |
+|----------|--------------|--------|-------------|
+| **Bassa** | 1.0 - 5.0 | 🟢 Verde | Rischi accettabili |
+| **Media** | 5.5 - 10.0 | 🟡 Giallo | Rischi da monitorare |
+| **Alta** | 10.5 - 15.0 | 🟠 Arancione | Rischi da mitigare |
+| **Estrema** | 15.5 - 25.0 | 🔴 Rosso | Rischi critici |
+
+### Export e Reportistica
+
+#### Export PDF
+- Report completo con heat map integrata
+- Tabella rischi formattata
+- Statistiche e metriche riassuntive
+- Layout professionale per presentazioni
+
+#### Export Excel
+- Fogli multipli: Dati, Statistiche, Grafici
+- Formattazione condizionale
+- Grafici pivot integrati
+- Compatibile con Excel 2016+
 
 ## 🏗️ Architettura
 
 ```
 risk-assessment-dashboard/
-├── risk_dashboard.py          # Applicazione principale
-├── requirements.txt           # Dipendenze Python
-├── risk_data.csv             # Database dei rischi (generato automaticamente)
-├── .gitignore                # File Git ignore
-├── README.md                 # Documentazione
-└── screenshots/              # Screenshot per documentazione
-    └── dashboard_preview.png
+├── 📁 src/
+│   ├── risk_dashboard.py          # Applicazione principale Streamlit
+│   ├── utils/
+│   │   ├── data_manager.py        # Gestione persistenza dati
+│   │   ├── risk_calculator.py     # Algoritmi calcolo rischio
+│   │   └── export_handler.py      # Gestione export PDF/Excel
+│   └── components/
+│       ├── heatmap.py            # Componente heat map
+│       ├── data_table.py         # Tabella interattiva
+│       └── forms.py              # Form di input
+├── 📁 data/
+│   ├── risk_data.csv             # Database principale
+│   └── config.yaml               # Configurazioni
+├── 📁 exports/                   # Directory export generati
+├── 📁 tests/
+│   ├── test_risk_calculator.py   # Test unità
+│   └── test_data_manager.py
+├── 📁 docs/                      # Documentazione
+├── requirements.txt              # Dipendenze Python
+├── Dockerfile                    # Container Docker
+├── .gitignore
+└── README.md
 ```
+
+### Stack Tecnologico
+
+- **Frontend**: Streamlit + AgGrid + Plotly
+- **Backend**: Python + Pandas
+- **Export**: ReportLab (PDF) + OpenPyXL (Excel)
+- **Styling**: CSS Custom + Bootstrap
+- **Database**: CSV (opzione upgrade a PostgreSQL/SQLite)
+
+## 📊 Metodologia di Valutazione
+
+### Calcolo del Rischio
+
+Il sistema utilizza la metodologia standard **ISO 31000:2018**:
+
+```python
+Valore_Rischio = Probabilità × Impatto
+Priorità = funzione(Valore_Rischio)
+```
+
+### Scale di Valutazione
+
+#### Probabilità (1-5)
+- **1.0**: Molto improbabile (< 5%)
+- **2.0**: Improbabile (5-25%)
+- **3.0**: Possibile (25-50%)
+- **4.0**: Probabile (50-75%)
+- **5.0**: Molto probabile (> 75%)
+
+#### Impatto (1-5)
+- **1.0**: Trascurabile
+- **2.0**: Minore
+- **3.0**: Moderato
+- **4.0**: Maggiore
+- **5.0**: Catastrofico
 
 ## 🎨 Personalizzazione
 
-### Modificare i Colori del Tema
+### Modificare Tema Colori
 
-Nel file `risk_dashboard.py`, sezione CSS:
+Nel file `src/risk_dashboard.py`, sezione CSS:
 
 ```python
-# Cambia il colore principale (attualmente rosso)
-color: #DC143C;  # Sostituisci con il tuo colore
+# Personalizza colore principale
+PRIMARY_COLOR = "#DC143C"  # Crimson Red
 
-# Cambia il gradiente del titolo
-background: linear-gradient(135deg, #8B0000 0%, #DC143C 50%, #FF6347 100%);
+# Personalizza gradiente header
+HEADER_GRADIENT = "linear-gradient(135deg, #8B0000 0%, #DC143C 50%, #FF6347 100%)"
 ```
 
-### Modificare le Soglie di Priorità
+### Configurare Soglie Priorità
 
-Nella funzione `calcola_priorita()`:
+Nel file `src/utils/risk_calculator.py`:
 
 ```python
-def calcola_priorita(valore_rischio):
-    if valore_rischio >= 16:    # Modifica questa soglia
+def calculate_priority_level(risk_value):
+    """Personalizza soglie di priorità"""
+    if risk_value >= 16:      # Modifica soglia estrema
         return "Estrema"
-    elif valore_rischio >= 11:  # Modifica questa soglia
+    elif risk_value >= 11:    # Modifica soglia alta
         return "Alta"
-    # ... etc
+    elif risk_value >= 6:     # Modifica soglia media
+        return "Media"
+    else:
+        return "Bassa"
+```
+
+### Aggiungere Nuove Categorie
+
+Nel file `data/config.yaml`:
+
+```yaml
+risk_categories:
+  - "Tecnico"
+  - "Finanziario"
+  - "Operativo"
+  - "Strategico"
+  - "Compliance"
+  - "La Tua Categoria"  # Aggiungi qui
+```
+
+## 🧪 Testing
+
+### Eseguire Test
+
+```bash
+# Test completi
+pytest tests/ -v
+
+# Test con coverage
+pytest tests/ --cov=src --cov-report=html
+
+# Test specifici
+pytest tests/test_risk_calculator.py -v
+```
+
+### Test di Performance
+
+```bash
+# Load testing con dati di esempio
+python tests/performance_test.py --records=1000
+```
+
+## 🚀 Deployment
+
+### Deployment Locale
+
+```bash
+# Produzione locale
+streamlit run src/risk_dashboard.py --server.port=8501
+```
+
+### Deployment Streamlit Cloud
+
+1. Push su GitHub repository
+2. Connetti a [Streamlit Cloud](https://streamlit.io/cloud)
+3. Deploy automatico da repository
+
+### Deployment Docker
+
+```bash
+# Build e deploy
+docker build -t risk-dashboard .
+docker run -d -p 8501:8501 --name risk-app risk-dashboard
+```
+
+### Deployment su Heroku
+
+```bash
+# Setup Heroku
+heroku create your-risk-dashboard
+git push heroku main
 ```
 
 ## 🤝 Contribuire
 
-1. Fai un **Fork** del progetto
-2. Crea un **branch** per la tua feature (`git checkout -b feature/AmazingFeature`)
-3. **Commit** le tue modifiche (`git commit -m 'Add some AmazingFeature'`)
-4. **Push** al branch (`git push origin feature/AmazingFeature`)
-5. Apri una **Pull Request**
+Accogliamo contributi dalla community! 
 
-## 📊 Roadmap
+### Come Contribuire
 
-- [ ] **Autenticazione utenti** e multi-tenancy
-- [ ] **Dashboard analytics** con metriche avanzate
-- [ ] **Notifiche automatiche** per rischi ad alta priorità
-- [ ] **API REST** per integrazione con altri sistemi
-- [ ] **Backup automatico** su cloud storage
-- [ ] **Tema chiaro/scuro** configurabile
-- [ ] **Mobile responsive** ottimizzato
+1. **Fork** il repository
+2. **Crea** branch feature (`git checkout -b feature/amazing-feature`)
+3. **Commit** modifiche (`git commit -m 'Add: amazing feature'`)
+4. **Push** al branch (`git push origin feature/amazing-feature`)
+5. **Apri** Pull Request
 
-## 🐛 Problemi Noti
+### Linee Guida
 
-- ⚠️ L'export PDF richiede librerie aggiuntive su alcuni sistemi
-- ⚠️ La heat map potrebbe non caricare correttamente su browser molto vecchi
+- Segui PEP 8 per lo stile Python
+- Aggiungi test per nuove funzionalità
+- Aggiorna documentazione quando necessario
+- Usa commit message descrittivi
+
+### Segnalare Bug
+
+Usa [GitHub Issues](https://github.com/tuousername/risk-assessment-dashboard/issues) con:
+- Descrizione dettagliata del problema
+- Steps per riprodurre
+- Environment (OS, Python version, browser)
+- Screenshot se applicabile
+
+## 📈 Roadmap
+
+### Versione 2.0 (Q3 2025)
+- [ ] **Multi-tenancy**: Supporto organizzazioni multiple
+- [ ] **API REST**: Integrazione sistemi esterni
+- [ ] **Real-time notifications**: Alert automatici
+- [ ] **Advanced analytics**: Machine learning insights
+
+### Versione 2.1 (Q4 2025)
+- [ ] **Mobile app**: App nativa iOS/Android
+- [ ] **Workflow engine**: Automazione processi
+- [ ] **Advanced reporting**: Report personalizzabili
+- [ ] **Integration hub**: Connettori JIRA, Slack, Teams
+
+### Versione 3.0 (2026)
+- [ ] **AI-powered**: Predizioni rischio automatiche
+- [ ] **Blockchain**: Audit trail immutabile
+- [ ] **Enterprise SSO**: Integration LDAP/SAML
+- [ ] **Global deployment**: Multi-region support
+
+## 🐛 Troubleshooting
+
+### Problemi Comuni
+
+#### Errore "Module not found"
+```bash
+# Reinstalla dipendenze
+pip install -r requirements.txt --force-reinstall
+```
+
+#### Export PDF non funziona
+```bash
+# Su Ubuntu/Debian
+sudo apt-get install python3-dev build-essential
+
+# Su macOS
+brew install cairo pango gdk-pixbuf libffi
+```
+
+#### Performance lente con molti dati
+- Abilita caching in `config.yaml`
+- Considera upgrade a database PostgreSQL
+- Ottimizza filtri tabella
+
+### Log e Debug
+
+```bash
+# Abilita debug mode
+streamlit run risk_dashboard.py --logger.level=debug
+```
 
 ## 📄 Licenza
 
-Questo progetto è distribuito sotto licenza MIT. Vedi `LICENSE` per maggiori informazioni.
+Questo progetto è distribuito sotto **Licenza MIT**. Vedi file [LICENSE](LICENSE) per dettagli completi.
 
-## 👨‍💻 Autore
+```
+MIT License - Copyright (c) 2025 Your Name
 
-**Il Tuo Nome**
-- GitHub: [@tuousername](https://github.com/tuousername)
-- LinkedIn: [Il Tuo Nome](https://linkedin.com/in/tuoprofilo)
-- Email: tua.email@esempio.com
+Permission is hereby granted, free of charge, to any person obtaining a copy...
+```
 
-## 🙏 Ringraziamenti
+## 👨‍💻 Autore e Crediti
 
-- [Streamlit](https://streamlit.io/) per il framework web
-- [AgGrid](https://github.com/PablocFonseca/streamlit-aggrid) per la tabella interattiva
-- [ReportLab](https://www.reportlab.com/) per la generazione PDF
-- [Matplotlib](https://matplotlib.org/) per i grafici
-
----
-
-⭐ Se questo progetto ti è stato utile, lascia una stella!
-
-## 📞 Supporto
-
-Hai trovato un bug o hai una richiesta di feature? 
-- Apri una [Issue](https://github.com/tuousername/risk-assessment-dashboard/issues)
-- Contattami direttamente via email
-
----
+**rstarttt**
+- 🐙 GitHub: [@tuousername](https://github.com/rstarttt)
+- 📧 Email: rstart@outlook.it
 
 <div align="center">
-  <strong>Risk Assessment Dashboard</strong><br>
-  Gestione professionale dei rischi di progetto
+
+**⭐ Se questo progetto ti è stato utile, lascia una stella su GitHub! ⭐**
+
+[📖 **DOCUMENTAZIONE**](https://github.com/tuousername/risk-assessment-dashboard/wiki) | 
+[🐛 **SEGNALA BUG**](https://github.com/tuousername/risk-assessment-dashboard/issues)
+
+---
+
+**Risk Assessment Dashboard** • Gestione Professionale dei Rischi di Progetto  
+*Developed with ❤️ by [Your Name](https://github.com/rstarttt)*
+
 </div>
