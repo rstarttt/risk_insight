@@ -20,7 +20,6 @@
 - [🧪 Testing](#-testing)
 - [🚀 Deployment](#-deployment)
 - [🐛 Troubleshooting](#-troubleshooting)
-- [👨🏻‍🎓 Segnala Bug](#-segnalare-bug)
 - [🤝 Contribuire](#-contribuire)
 - [📄 Licenza](#-licenza)
 
