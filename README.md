@@ -86,8 +86,8 @@ Il **Risk Assessment Dashboard** è una soluzione completa per la gestione quant
 
 1. **Clona il repository**
    ```bash
-   git clone https://github.com/tuousername/risk-assessment-dashboard.git
-   cd risk-assessment-dashboard
+   git clone https://github.com/rstarttt/risk_insight.git
+   cd risk_insight
    ```
 
 2. **Crea ambiente virtuale** (altamente raccomandato)
