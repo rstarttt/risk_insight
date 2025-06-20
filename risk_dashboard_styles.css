@@ -1,0 +1,136 @@
+body {
+    color: #e0e6f0;
+    background-color: #0d1117;
+}
+.stApp {
+    background-color: #0d1117;
+}
+.stAppHeader {
+    background-color: #0d1117;
+}
+/* Miglioramenti form e input */
+div[data-testid="stSlider"] label, 
+div[data-testid="stSelectbox"] label, 
+div[data-testid="stDateInput"] label,
+div[data-testid="stTextInput"] label {
+    color: #e0e6f0 !important;
+    font-weight: 500 !important;
+}
+.stSlider > div > div > div {
+    background-color: #1f2937 !important;
+}
+.stSelectbox > div > div {
+    background-color: #1f2937 !important;
+    border-color: #374151 !important;
+}
+.stTextInput > div > div > input {
+    background-color: #1f2937 !important;
+    border-color: #374151 !important;
+    color: #e0e6f0 !important;
+}
+/* Stile per i pulsanti principali */
+.stButton > button {
+    background: transparent;
+    color: #DC143C;
+    border: 2px solid #DC143C;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+.stButton > button:hover {
+    background: rgba(220, 20, 60, 0.1);
+    border-color: #FF1744;
+    color: #FF1744;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(220, 20, 60, 0.2);
+}
+/* Header styling */
+h1, h2, h3 {
+    color: #e0e6f0 !important;
+    font-weight: 600 !important;
+}
+h2 {
+    border-bottom: 2px solid #DC143C;
+    padding-bottom: 2px;
+    margin-bottom: 16px;
+}
+/* Success messages */
+.stSuccess {
+    background-color: rgba(34, 197, 94, 0.1) !important;
+    border: 1px solid rgba(34, 197, 94, 0.3) !important;
+}
+/* Info messages */
+.stInfo {
+    background-color: rgba(59, 130, 246, 0.1) !important;
+    border: 1px solid rgba(59, 130, 246, 0.3) !important;
+}
+/* Warning messages */
+.stWarning {
+    background-color: rgba(251, 191, 36, 0.1) !important;
+    border: 1px solid rgba(251, 191, 36, 0.3) !important;
+}
+
+/* CSS PERFETTO PER ALLINEAMENTO PULSANTI ELIMINA */
+.delete-button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding-top: 2.75rem; /* Allineamento preciso con prima riga dati */
+}
+
+.delete-button-row {
+    height: 35px; /* Altezza esatta di una riga della tabella */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+}
+
+/* Stile specifico per i pulsanti di eliminazione */
+.delete-button-row .stButton {
+    margin: 0 !important;
+    padding: 0 !important;
+    height: 24px !important;
+    width: 24px !important;
+}
+
+.delete-button-row .stButton > button {
+    min-height: 24px !important;
+    height: 24px !important;
+    width: 24px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    font-size: 14px !important;
+    font-weight: bold !important;
+    border-radius: 4px !important;
+    line-height: 1 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: rgba(239, 68, 68, 0.1) !important;
+    border: 1px solid rgba(239, 68, 68, 0.4) !important;
+    color: #ef4444 !important;
+    transition: all 0.15s ease !important;
+}
+
+.delete-button-row .stButton > button:hover {
+    background: rgba(239, 68, 68, 0.25) !important;
+    border-color: rgba(239, 68, 68, 0.7) !important;
+    color: #dc2626 !important;
+    transform: scale(1.05) !important;
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3) !important;
+}
+
+/* Assicura che il dataframe abbia altezza delle righe consistente */
+div[data-testid="stDataFrame"] {
+    font-size: 14px !important;
+}
+
+div[data-testid="stDataFrame"] tbody tr {
+    height: 35px !important;
+}
+
+div[data-testid="stDataFrame"] thead tr {
+    height: 44px !important;
+}

@@ -23,147 +23,8 @@ DATA_FILE = 'risk_data.csv'
 # Streamlit page config (opzionale, per layout wide)
 st.set_page_config(page_title="Dashboard Risk Assessment", layout="wide")
 
-# CSS globale per tema scuro uniforme ottimizzato
-st.markdown("""
-<style>
-body {
-    color: #e0e6f0;
-    background-color: #0d1117;
-}
-.stApp {
-    background-color: #0d1117;
-}
-.stAppHeader {
-    background-color: #0d1117;
-}
-/* Miglioramenti form e input */
-div[data-testid="stSlider"] label, 
-div[data-testid="stSelectbox"] label, 
-div[data-testid="stDateInput"] label,
-div[data-testid="stTextInput"] label {
-    color: #e0e6f0 !important;
-    font-weight: 500 !important;
-}
-.stSlider > div > div > div {
-    background-color: #1f2937 !important;
-}
-.stSelectbox > div > div {
-    background-color: #1f2937 !important;
-    border-color: #374151 !important;
-}
-.stTextInput > div > div > input {
-    background-color: #1f2937 !important;
-    border-color: #374151 !important;
-    color: #e0e6f0 !important;
-}
-/* Stile per i pulsanti principali */
-.stButton > button {
-    background: transparent;
-    color: #DC143C;
-    border: 2px solid #DC143C;
-    border-radius: 8px;
-    font-weight: 500;
-    transition: all 0.2s ease;
-}
-.stButton > button:hover {
-    background: rgba(220, 20, 60, 0.1);
-    border-color: #FF1744;
-    color: #FF1744;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(220, 20, 60, 0.2);
-}
-/* Header styling */
-h1, h2, h3 {
-    color: #e0e6f0 !important;
-    font-weight: 600 !important;
-}
-h2 {
-    border-bottom: 2px solid #DC143C;
-    padding-bottom: 2px;
-    margin-bottom: 16px;
-}
-/* Success messages */
-.stSuccess {
-    background-color: rgba(34, 197, 94, 0.1) !important;
-    border: 1px solid rgba(34, 197, 94, 0.3) !important;
-}
-/* Info messages */
-.stInfo {
-    background-color: rgba(59, 130, 246, 0.1) !important;
-    border: 1px solid rgba(59, 130, 246, 0.3) !important;
-}
-/* Warning messages */
-.stWarning {
-    background-color: rgba(251, 191, 36, 0.1) !important;
-    border: 1px solid rgba(251, 191, 36, 0.3) !important;
-}
-
-/* CSS PERFETTO PER ALLINEAMENTO PULSANTI ELIMINA */
-.delete-button-container {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    padding-top: 2.75rem; /* Allineamento preciso con prima riga dati */
-}
-
-.delete-button-row {
-    height: 35px; /* Altezza esatta di una riga della tabella */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0;
-    padding: 0;
-}
-
-/* Stile specifico per i pulsanti di eliminazione */
-.delete-button-row .stButton {
-    margin: 0 !important;
-    padding: 0 !important;
-    height: 24px !important;
-    width: 24px !important;
-}
-
-.delete-button-row .stButton > button {
-    min-height: 24px !important;
-    height: 24px !important;
-    width: 24px !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    font-size: 14px !important;
-    font-weight: bold !important;
-    border-radius: 4px !important;
-    line-height: 1 !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    background: rgba(239, 68, 68, 0.1) !important;
-    border: 1px solid rgba(239, 68, 68, 0.4) !important;
-    color: #ef4444 !important;
-    transition: all 0.15s ease !important;
-}
-
-.delete-button-row .stButton > button:hover {
-    background: rgba(239, 68, 68, 0.25) !important;
-    border-color: rgba(239, 68, 68, 0.7) !important;
-    color: #dc2626 !important;
-    transform: scale(1.05) !important;
-    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3) !important;
-}
-
-/* Assicura che il dataframe abbia altezza delle righe consistente */
-div[data-testid="stDataFrame"] {
-    font-size: 14px !important;
-}
-
-div[data-testid="stDataFrame"] tbody tr {
-    height: 35px !important;
-}
-
-div[data-testid="stDataFrame"] thead tr {
-    height: 44px !important;
-}
-</style>
-""", unsafe_allow_html=True)
+with open("risk_dashboard_styles.css") as f:
+    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 # Titolo della dashboard con stile premium
 st.markdown("""
@@ -241,7 +102,7 @@ if 'df' not in st.session_state:
 def refresh_data():
     st.session_state.df = load_data(DATA_FILE)
 
-# Verifica se c'è stato un rerun e ricarica i dati
+# Verifica se serve aggiornare i dati da file
 if 'page_refresh' not in st.session_state:
     st.session_state.page_refresh = 0
     refresh_data()
@@ -260,7 +121,7 @@ def calcola_priorita(valore_rischio):
 # Funzione per eliminare un rischio
 def elimina_rischio(risk_id):
     """Elimina un rischio e salva immediatamente"""
-    # Rimuovi il rischio dal DataFrame
+    # Rimuove il rischio con ID specificato
     st.session_state.df = st.session_state.df[st.session_state.df['ID'] != risk_id]
     
     # Salva immediatamente nel file
@@ -505,7 +366,7 @@ def create_pdf_report(df):
             elements.append(Paragraph("Heat Map dei Rischi", styles['Heading2']))
             elements.append(Spacer(1, 0.2*inch))
             
-            # Crea immagine per ReportLab
+            
             img = Image(heatmap_img, width=7*inch, height=5*inch)
             elements.append(img)
             
@@ -546,7 +407,7 @@ if 'form_counter' not in st.session_state:
 
 # Sezione per aggiungere un nuovo rischio
 st.header("Aggiungi Nuovo Rischio")
-# Uso un key dinamico che cambia ad ogni reset per forzare la ricreazione del form
+# Form con chiave dinamica per forzare il reset
 with st.form(key=f'form_nuovo_rischio_{st.session_state.form_counter}'):
     descrizione = st.text_input("Descrizione del rischio", value=st.session_state.form_descrizione)
     prob = st.slider("Probabilità (1-5)", min_value=1.0, max_value=5.0, value=st.session_state.form_prob, step=0.5)
@@ -643,11 +504,11 @@ st.header("Tabella dei rischi")
 st.markdown("<div style='margin-bottom: 16px;'></div>", unsafe_allow_html=True)
 
 if not st.session_state.df.empty:
-    # Preparo DataFrame per AgGrid con colonna Elimina
+    # Prepara il DataFrame per AgGrid
     display_df = st.session_state.df.copy()
     display_df = display_df.drop(columns=['Valore_Rischio'])
     
-    # Accorcio le descrizioni e contromisure per evitare scroll laterale E AGGIUNGO MAIUSCOLA
+    # Riduce la lunghezza di alcune colonne per evitare overflow
     display_df['Descrizione'] = display_df['Descrizione'].apply(
         lambda x: (str(x)[:35] + '...' if len(str(x)) > 35 else str(x)).capitalize()
     )
@@ -714,7 +575,7 @@ if not st.session_state.df.empty:
                                 'display': 'flex', 'alignItems': 'center', 'justifyContent': 'center',
                                 'borderRight': '1px solid #334155', 'height': '60px'})
     
-    # Colonna Elimina con checkbox editabile che appare come un pulsante
+    # Colonna "Elimina" con checkbox modificabile
     gb.configure_column(
         "Elimina", 
         width=80,
@@ -857,8 +718,7 @@ else:
 # Heat Map Risk Assessment
 if not st.session_state.df.empty:
     st.header("Heat Map dei Rischi")
-    
-    # Creo l'HTML della heatmap con posizionamento proporzionale per valori decimali
+
     impact_labels = ['1', '2', '3', '4', '5']
     likelihood_labels = ['1', '2', '3', '4', '5']
     
@@ -876,7 +736,7 @@ if not st.session_state.df.empty:
         else:
             return '#374151', 'NESSUNO'  # Grigio (0)
     
-    # Container principale della heat map
+    # Contenitore principale della heatmap
     heatmap_complete = '<div style="display: flex; justify-content: center; margin: 20px 0; padding: 15px;">'
     heatmap_complete += '<div style="background: linear-gradient(135deg, #1e293b 0%, #334155 100%); padding: 40px; border-radius: 16px; box-shadow: 0 15px 40px rgba(0,0,0,0.4); border: 1px solid #475569; max-width: 800px; width: 100%; position: relative;">'
     
@@ -886,7 +746,7 @@ if not st.session_state.df.empty:
     # Contenitore della griglia con area di disegno assoluta (più largo)
     heatmap_complete += '<div style="position: relative; width: 520px; height: 520px; margin: 0 auto;">'
     
-    # Disegno la griglia 5x5 di sfondo (più larga)
+    # Griglia 5x5 di sfondo (più larga)
     grid_width = 450  # Era 350, ora 450 per più spazio
     grid_height = 450  # Era 350, ora 450 per più spazio
     cell_width = grid_width / 5
@@ -895,7 +755,7 @@ if not st.session_state.df.empty:
     # Area della griglia di sfondo
     heatmap_complete += f'<div style="position: absolute; top: 29px; left: 80px; width: {grid_width}px; height: {grid_height}px;">'
     
-    # Creo le celle di sfondo 5x5 per rappresentare valori da 0 a 5 (corrette)
+    #Celle di sfondo 5x5 per rappresentare valori da 0 a 5 (corrette)
     for i in range(5):  # Righe (Impact da Alto a Basso nella visualizzazione)
         for j in range(5):  # Colonne (Probabilità da Bassa ad Alta)
             # Calcolo dei valori per ogni cella della griglia
@@ -928,12 +788,12 @@ if not st.session_state.df.empty:
             
         risk_value = prob * imp
         
-        # CALCOLO CORRETTO: coordinate relative al contenitore griglia
+        
         # Stesse coordinate delle celle di sfondo
         pixel_x = ((prob - 0.5) * cell_width)
         pixel_y = ((5.5 - imp) * cell_height)
         
-        # Dimensioni pallino
+        # Dimensioni rischi su heatmap
         num_risks = len(risk_ids)
         size = 28 + (num_risks - 1) * 6
         font_size = 11 if num_risks == 1 else 10
@@ -941,7 +801,7 @@ if not st.session_state.df.empty:
         # Crea stringa degli ID
         id_string = ", ".join(map(str, sorted(risk_ids)))
         
-        # Posizione finale del pallino (centrato)
+        # Posizione rischi 
         final_x = round(pixel_x - size/2)
         final_y = round(pixel_y - size/2)
         
@@ -949,25 +809,24 @@ if not st.session_state.df.empty:
     
     heatmap_complete += '</div>'  # Chiude area griglia
     
-    # Etichette degli assi
-    # Etichette Impact (verticali a sinistra) - da 0 a 5 dal basso all'alto
+    # Etichette degli assi della heatmap
+    
     for i, label in enumerate(reversed(impact_labels)):
         y_pos = 25 + i * cell_height + cell_height/2 - 10
         heatmap_complete += f'<div style="position: absolute; left: 35px; top: {y_pos}px; font-size: 12px; font-weight: 600; color: #cbd5e1; text-transform: uppercase; letter-spacing: 0.3px; width: 40px; text-align: right;">{label}</div>'
     
-    # Etichette Probabilità (orizzontali in basso) - allineate come quelle dell'impatto
+    # Etichette Probabilità 
     for i, label in enumerate(likelihood_labels):
         x_pos = 80 + i * cell_width + cell_width/2 - 10
         heatmap_complete += f'<div style="position: absolute; left: {x_pos}px; top: {25 + grid_height + 15}px; font-size: 12px; font-weight: 600; color: #cbd5e1; text-transform: uppercase; letter-spacing: 0.3px; width: 20px; text-align: center;">{label}</div>'
-    
-    # Etichetta PROBABILITÀ centrata in basso (perfettamente centrata sulla griglia)
+
     heatmap_complete += '<div style="position: absolute; left: 305px; top: 520px; transform: translateX(-50%); font-weight: 700; color: #e2e8f0; font-size: 16px; text-transform: uppercase; letter-spacing: 0.8px; text-shadow: 0 1px 2px rgba(0,0,0,0.5);">PROBABILITÀ</div>'
     
     heatmap_complete += '</div>'  # Chiude contenitore griglia
     heatmap_complete += '</div>'  # Chiude heatmap-wrapper
     heatmap_complete += '</div>'  # Chiude heatmap-container
     
-    # Mostro la heatmap
+
     st.markdown(heatmap_complete, unsafe_allow_html=True)
 
 # Sezione per esportazione dati
@@ -979,7 +838,7 @@ if not st.session_state.df.empty:
     
     col1, col2 = st.columns(2)
     
-    # Export PDF con gestione errori migliorata
+    # Export PDF
     with col1:
         if st.button("📄 Esporta in PDF", use_container_width=True):
             with st.spinner("Generazione PDF in corso..."):
@@ -1130,7 +989,7 @@ if not st.session_state.df.empty:
                 ws2.column_dimensions['A'].width = 15
                 ws2.column_dimensions['B'].width = 15
                 
-                # Salva Excel
+                # Salva il report Excel in un buffer
                 excel_buffer = BytesIO()
                 wb.save(excel_buffer)
                 excel_buffer.seek(0)
