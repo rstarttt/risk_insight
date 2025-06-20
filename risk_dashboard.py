@@ -265,7 +265,6 @@ def create_heatmap_image(df):
 def create_pdf_report(df):
     """Crea un report PDF con heat map inclusa"""
     try:
-        # Import con gestione errori
         from reportlab.lib import colors
         from reportlab.lib.pagesizes import A4, landscape
         from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer, Image, PageBreak
@@ -273,11 +272,8 @@ def create_pdf_report(df):
         from reportlab.lib.units import inch
         from reportlab.lib.enums import TA_CENTER
         import io
-        
-        # Crea buffer per il PDF
+
         pdf_buffer = io.BytesIO()
-        
-        # Crea documento PDF con parametri semplificati
         doc = SimpleDocTemplate(
             pdf_buffer,
             pagesize=landscape(A4),
@@ -286,11 +282,8 @@ def create_pdf_report(df):
             topMargin=20,
             bottomMargin=20
         )
-        
-        # Lista elementi da aggiungere al PDF
+
         elements = []
-        
-        # Stili base
         styles = getSampleStyleSheet()
         title_style = ParagraphStyle(
             'CustomTitle',
@@ -299,89 +292,74 @@ def create_pdf_report(df):
             spaceAfter=20,
             alignment=TA_CENTER
         )
-        
-        # Titolo
+
         elements.append(Paragraph("🛡️ Risk Assessment Report", title_style))
         elements.append(Paragraph(f"Data: {date.today().strftime('%d/%m/%Y')}", styles['Normal']))
-        elements.append(Spacer(1, 0.3*inch))
-        
-        # Prepara dati per la tabella (versione semplificata) con decimali
-        data = [['ID', 'Descrizione', 'Prob.', 'Imp.', 'Priorità', 'Stato']]
-        
+        elements.append(Spacer(1, 0.3 * inch))
+
+        data = [['ID', 'Descrizione', 'Probabilità', 'Impatto', 'Priorità', 'Stato', 'Contromisura']]
+
         for _, row in df.iterrows():
-            # Tronca le descrizioni lunghe per evitare problemi di layout
-            desc = str(row['Descrizione'])
+            desc = str(row['Descrizione']) if pd.notnull(row['Descrizione']) else ""
             if len(desc) > 40:
                 desc = desc[:37] + "..."
-                
+            desc_cont = str(row['Contromisura']) if pd.notnull(row['Contromisura']) else ""
+            if len(desc_cont) > 30:
+                desc_cont = desc_cont[:27] + "..."
+
             data.append([
                 str(row['ID']),
                 desc,
-                f"{row['Probabilità']:.1f}",  # Mostra un decimale
-                f"{row['Impatto']:.1f}",      # Mostra un decimale
+                f"{row['Probabilità']:.1f}",
+                f"{row['Impatto']:.1f}",
                 str(row['Priorità']),
-                str(row['Stato'])
+                str(row['Stato']),
+                desc_cont
             ])
-        
-        # Crea tabella con stile semplificato
+
         table = Table(data)
-        
-        # Stile tabella base
         table_style = TableStyle([
-            # Header
             ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
             ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
             ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
             ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
             ('FONTSIZE', (0, 0), (-1, 0), 10),
             ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
-            
-            # Corpo tabella
             ('FONTNAME', (0, 1), (-1, -1), 'Helvetica'),
             ('FONTSIZE', (0, 1), (-1, -1), 9),
             ('GRID', (0, 0), (-1, -1), 1, colors.black),
             ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
         ])
-        
         table.setStyle(table_style)
         elements.append(table)
-        
-        # Aggiungi riepilogo
-        elements.append(Spacer(1, 0.5*inch))
+
+        # Riepilogo
+        elements.append(Spacer(1, 0.5 * inch))
         elements.append(Paragraph("Riepilogo per Priorità", styles['Heading2']))
-        
-        # Conta rischi per priorità
         priority_counts = df['Priorità'].value_counts()
         summary_text = ""
         for priority in ['Estrema', 'Alta', 'Media', 'Bassa']:
             count = priority_counts.get(priority, 0)
             summary_text += f"{priority}: {count} rischi<br/>"
-        
         elements.append(Paragraph(summary_text, styles['Normal']))
-        
-        # Aggiungi heat map se possibile
+
         heatmap_img = create_heatmap_image(df)
         if heatmap_img is not None:
             elements.append(PageBreak())
             elements.append(Paragraph("Heat Map dei Rischi", styles['Heading2']))
-            elements.append(Spacer(1, 0.2*inch))
-            
-            
-            img = Image(heatmap_img, width=7*inch, height=5*inch)
+            elements.append(Spacer(1, 0.2 * inch))
+            img = Image(heatmap_img, width=7 * inch, height=5 * inch)
             elements.append(img)
-            
-            # Note esplicative
-            elements.append(Spacer(1, 0.3*inch))
-            elements.append(Paragraph("Note: I numeri neri indicano gli ID dei rischi posizionati secondo probabilità e impatto (valori da 1 a 5 con incrementi di 0.5). "
-                                    "I colori rappresentano le priorità: Verde (Bassa), Giallo (Media), Arancione (Alta), Rosso (Estrema).", 
-                                    styles['Normal']))
-        
-        # Costruisci PDF
+            elements.append(Spacer(1, 0.3 * inch))
+            elements.append(Paragraph(
+                "Note: I numeri neri indicano gli ID dei rischi posizionati secondo probabilità e impatto (valori da 1 a 5 con incrementi di 0.5). "
+                "I colori rappresentano le priorità: Verde (Bassa), Giallo (Media), Arancione (Alta), Rosso (Estrema).",
+                styles['Normal']))
+
         doc.build(elements)
         pdf_buffer.seek(0)
-        
         return pdf_buffer
-        
+
     except ImportError:
         st.error("Librerie necessarie non disponibili. Installa con: pip install reportlab matplotlib")
         return None
