@@ -487,12 +487,12 @@ if not st.session_state.df.empty:
     display_df = display_df.drop(columns=['Valore_Rischio'])
     
     # Riduce la lunghezza di alcune colonne per evitare overflow
-    display_df['Descrizione'] = display_df['Descrizione'].apply(
-        lambda x: (str(x)[:35] + '...' if len(str(x)) > 35 else str(x)).capitalize()
-    )
-    display_df['Contromisura'] = display_df['Contromisura'].apply(
-        lambda x: (str(x)[:30] + '...' if len(str(x)) > 30 else str(x)).capitalize()
-    )
+    #display_df['Descrizione'] = display_df['Descrizione'].apply(
+    #    lambda x: (str(x)[:35] + '...' if len(str(x)) > 35 else str(x)).capitalize()
+    #)
+    #display_df['Contromisura'] = display_df['Contromisura'].apply(
+    #    lambda x: (str(x)[:30] + '...' if len(str(x)) > 30 else str(x)).capitalize()
+    #)
     
     # Aggiungo icone agli stati
     status_mapping = {
@@ -508,56 +508,55 @@ if not st.session_state.df.empty:
     
     # Configurazione AgGrid
     gb = GridOptionsBuilder.from_dataframe(display_df)
-    
-    # Configurazione generale
+
+    # Unica chiamata con tutte le impostazioni
     gb.configure_default_column(
         groupable=False,
         value=True,
         enableRowGroup=False,
         aggFunc="sum",
         editable=False,
-        resizable=True
+        resizable=True,
+        wrapText=True,  # testo a capo
+        autoHeight=True # altezza riga automatica
     )
-    
+
     # Configurazione colonne specifiche con stili inline forzati e TUTTI i titoli in maiuscolo
-    gb.configure_column("ID", width=60, type=["numericColumn"], header_name="ID",
-                       cellStyle={'textAlign': 'center', 'fontSize': '16px', 'fontWeight': '600', 
-                                'display': 'flex', 'alignItems': 'center', 'justifyContent': 'center',
-                                'borderRight': '1px solid #334155', 'height': '60px'})
-    gb.configure_column("Descrizione", width=220, header_name="DESCRIZIONE",
-                       cellStyle={'textAlign': 'center', 'fontSize': '15px', 'fontWeight': '700',
-                                'display': 'flex', 'alignItems': 'center', 'justifyContent': 'center',
-                                'borderRight': '1px solid #334155', 'height': '60px'})
-    gb.configure_column("Probabilità", width=100, header_name="PROBABILITÀ", type=["numericColumn"], 
-                       cellStyle={'textAlign': 'center', 'fontSize': '16px', 'fontWeight': '600',
-                                'display': 'flex', 'alignItems': 'center', 'justifyContent': 'center',
-                                'borderRight': '1px solid #334155', 'height': '60px'})
-    gb.configure_column("Impatto", width=90, header_name="IMPATTO", type=["numericColumn"], 
-                       cellStyle={'textAlign': 'center', 'fontSize': '16px', 'fontWeight': '600',
-                                'display': 'flex', 'alignItems': 'center', 'justifyContent': 'center',
-                                'borderRight': '1px solid #334155', 'height': '60px'})
-    gb.configure_column("Priorità", width=100, header_name="PRIORITÀ",
-                       cellStyle={'textAlign': 'center', 'fontSize': '15px', 'fontWeight': '700',
-                                'display': 'flex', 'alignItems': 'center', 'justifyContent': 'center',
-                                'borderRight': '1px solid #334155', 'height': '60px'})
-    gb.configure_column("Contromisura", width=200, header_name="CONTROMISURA",
-                       cellStyle={'textAlign': 'center', 'fontSize': '15px', 'fontWeight': '700',
-                                'display': 'flex', 'alignItems': 'center', 'justifyContent': 'center',
-                                'borderRight': '1px solid #334155', 'height': '60px'})
-    gb.configure_column("Stato", width=80, header_name="STATO",
-                       cellStyle={'textAlign': 'center', 'fontSize': '18px', 'fontWeight': '500',
-                                'display': 'flex', 'alignItems': 'center', 'justifyContent': 'center',
-                                'borderRight': '1px solid #334155', 'height': '60px'})
-    gb.configure_column("Data scadenza", width=120, header_name="SCADENZA", 
-                       cellStyle={'textAlign': 'center', 'fontSize': '15px', 'fontWeight': '700',
-                                'display': 'flex', 'alignItems': 'center', 'justifyContent': 'center',
-                                'borderRight': '1px solid #334155', 'height': '60px'})
+    gb.configure_column("ID", width=60, minWidth=50, maxWidth=80, type=["numericColumn"], header_name="ID",
+                    wrapText=True, autoHeight=True,
+                    cellStyle={'textAlign': 'center', 'fontSize': '14px', 'fontWeight': '600', 
+                                'whiteSpace': 'normal', 'wordWrap': 'break-word'})
+    gb.configure_column("Descrizione", width=300, minWidth=250, maxWidth=350, header_name="DESCRIZIONE",
+                    wrapText=True, autoHeight=True,
+                    cellStyle={'textAlign': 'left', 'fontSize': '13px', 'fontWeight': '600',
+                                'padding': '8px', 'whiteSpace': 'normal', 'wordWrap': 'break-word', 'lineHeight': '1.4'})
+    gb.configure_column("Probabilità", width=100, minWidth=80, maxWidth=120, header_name="PROBABILITÀ", 
+                    wrapText=True, autoHeight=True,
+                    cellStyle={'textAlign': 'center', 'fontSize': '14px', 'fontWeight': '600',
+                                'whiteSpace': 'normal', 'wordWrap': 'break-word'})
+    gb.configure_column("Impatto", width=90, minWidth=70, maxWidth=110, header_name="IMPATTO", 
+                    wrapText=True, autoHeight=True,
+                    cellStyle={'textAlign': 'center', 'fontSize': '14px', 'fontWeight': '600',
+                                'whiteSpace': 'normal', 'wordWrap': 'break-word'})
+    gb.configure_column("Priorità", width=100, minWidth=80, maxWidth=120, header_name="PRIORITÀ",
+                    wrapText=True, autoHeight=True,
+                    cellStyle={'textAlign': 'center', 'fontSize': '12px', 'fontWeight': '700',
+                                'whiteSpace': 'normal', 'wordWrap': 'break-word'})
+    gb.configure_column("Contromisura", width=280, minWidth=200, maxWidth=320, header_name="CONTROMISURA",
+                    wrapText=True, autoHeight=True,
+                    cellStyle={'textAlign': 'left', 'fontSize': '13px', 'fontWeight': '600',
+                                'padding': '8px', 'whiteSpace': 'normal', 'wordWrap': 'break-word', 'lineHeight': '1.4'})
+    gb.configure_column("Stato", width=80, minWidth=60, maxWidth=100, header_name="STATO",
+                    wrapText=True, autoHeight=True,
+                    cellStyle={'textAlign': 'center', 'fontSize': '16px', 'fontWeight': '500',
+                                'whiteSpace': 'normal', 'wordWrap': 'break-word'})
+    gb.configure_column("Data scadenza", width=110, minWidth=90, maxWidth=130, header_name="SCADENZA", 
+                    wrapText=True, autoHeight=True,
+                    cellStyle={'textAlign': 'center', 'fontSize': '12px', 'fontWeight': '600',
+                                'whiteSpace': 'normal', 'wordWrap': 'break-word'})
     
     # Colonna "Elimina" con checkbox modificabile
-    gb.configure_column(
-        "Elimina", 
-        width=80,
-        header_name="ELIMINA",
+    gb.configure_column("Elimina", width=80, minWidth=60, maxWidth=100, header_name="ELIMINA",
         editable=True,
         cellEditor="agCheckboxCellEditor",
         cellRenderer="agCheckboxCellRenderer",
@@ -568,16 +567,16 @@ if not st.session_state.df.empty:
             'display': 'flex',
             'alignItems': 'center',
             'justifyContent': 'center'
-        }
-    )
-    
+            }
+        )
+
     # Configurazione grid
     gb.configure_selection(selection_mode="single", use_checkbox=False)
-    gb.configure_grid_options(domLayout='normal', rowHeight=60)
-    
+    gb.configure_grid_options(domLayout='normal', getRowHeight=None, autoRowHeight=True)
+
     # Tema scuro per AgGrid
     grid_options = gb.build()
-    
+
     # Mostra la griglia con gestione delle modifiche
     grid_response = AgGrid(
         display_df,
@@ -586,7 +585,7 @@ if not st.session_state.df.empty:
         width='100%',
         data_return_mode=DataReturnMode.FILTERED_AND_SORTED,
         update_mode=GridUpdateMode.VALUE_CHANGED,
-        fit_columns_on_grid_load=True,
+        fit_columns_on_grid_load=False,
         theme='streamlit',
         allow_unsafe_jscode=True,
         custom_css={
@@ -643,7 +642,14 @@ if not st.session_state.df.empty:
                 "display": "flex !important",
                 "align-items": "center !important",
                 "justify-content": "center !important",
-                "font-weight": "500 !important"
+                "font-weight": "500 !important",
+                "white-space": "normal !important",
+                "word-wrap": "break-word !important",
+                "word-break": "break-word !important",
+                "overflow-wrap": "break-word !important",
+                "padding": "6px !important",
+                "line-height": "1.3 !important",
+                "max-width": "350px !important"
             },
             ".ag-theme-streamlit .ag-cell-value": {
                 "text-align": "center !important"
@@ -665,10 +671,71 @@ if not st.session_state.df.empty:
                 "height": '20px !important',
                 "accent-color": '#ff4757 !important',
                 "cursor": 'pointer !important'
+            },
+            # CSS specifico per colonne di testo
+            ".ag-theme-streamlit [col-id='Descrizione'] .ag-cell": {
+                "text-align": 'left !important',
+                "justify-content": 'flex-start !important',
+                "align-items": 'flex-start !important',
+                "padding": '8px !important',
+                "white-space": 'normal !important',
+                "word-wrap": 'break-word !important',
+                "word-break": 'break-word !important',
+                "overflow-wrap": 'break-word !important',
+                "line-height": '1.4 !important',
+                "display": 'block !important',
+                "height": 'auto !important',
+                "min-height": '60px !important',
+                "max-width": '350px !important',
+                "hyphens": 'auto !important'
+            },
+            ".ag-theme-streamlit [col-id='Contromisura'] .ag-cell": {
+                "text-align": 'left !important',
+                "justify-content": 'flex-start !important',
+                "align-items": 'flex-start !important',
+                "padding": '8px !important',
+                "white-space": 'normal !important',
+                "word-wrap": 'break-word !important',
+                "word-break": 'break-word !important',
+                "overflow-wrap": 'break-word !important',
+                "line-height": '1.4 !important',
+                "display": 'block !important',
+                "height": 'auto !important',
+                "min-height": '60px !important',
+                "max-width": '350px !important',
+                "hyphens": 'auto !important'
+            },
+            # CSS per tutte le altre colonne con wrapping a 40 caratteri
+            ".ag-theme-streamlit [col-id='ID'] .ag-cell": {
+                "max-width": '80px !important',
+                "word-wrap": 'break-word !important'
+            },
+            ".ag-theme-streamlit [col-id='Probabilità'] .ag-cell": {
+                "max-width": '120px !important',
+                "word-wrap": 'break-word !important'
+            },
+            ".ag-theme-streamlit [col-id='Impatto'] .ag-cell": {
+                "max-width": '120px !important',
+                "word-wrap": 'break-word !important'
+            },
+            ".ag-theme-streamlit [col-id='Priorità'] .ag-cell": {
+                "max-width": '150px !important',
+                "word-wrap": 'break-word !important'
+            },
+            ".ag-theme-streamlit [col-id='Stato'] .ag-cell": {
+                "max-width": '100px !important',
+                "word-wrap": 'break-word !important'
+            },
+            ".ag-theme-streamlit [col-id='Data scadenza'] .ag-cell": {
+                "max-width": '130px !important',
+                "word-wrap": 'break-word !important'
+            },
+            ".ag-theme-streamlit [col-id='Elimina'] .ag-cell": {
+                "max-width": '100px !important'
             }
         }
     )
-    
+
     # Controlla se qualche checkbox è stata selezionata per l'eliminazione
     if 'data' in grid_response and grid_response['data'] is not None:
         updated_df = pd.DataFrame(grid_response['data'])
@@ -689,7 +756,6 @@ if not st.session_state.df.empty:
                     st.rerun()
                 else:
                     st.error(f"Errore nel salvataggio dopo eliminazione")
-
 else:
     st.info("Nessun rischio presente.")
 
