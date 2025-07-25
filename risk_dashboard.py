@@ -15,7 +15,7 @@ Dipendenze:
 
 Autore: [Nome]
 Data: [Data]
-Versione: 1.0
+Versione: 1.1 - Heat Map PDF Migliorata
 """
 
 # ===========================
@@ -220,7 +220,7 @@ def create_heatmap_image(df):
     - Griglia 5x5 rappresentando combinazioni Probabilità/Impatto
     - Colori basati sui livelli di priorità
     - Posizionamento preciso dei rischi basato sui valori decimali
-    - Etichette con ID dei rischi per identificazione
+    - Etichette con ID dei rischi in cerchi neri con dimensionamento dinamico
     
     Args:
         df (pd.DataFrame): DataFrame contenente i dati dei rischi
@@ -238,7 +238,7 @@ def create_heatmap_image(df):
         # Configurazione matplotlib per ambiente headless
         plt.switch_backend('Agg')
         
-        # Inizializzazione figura con sfondo bianco per PDF
+        # Inizializzazione figura con dimensioni originali
         fig, ax = plt.subplots(figsize=(10, 8))
         fig.patch.set_facecolor('white')
         
@@ -290,16 +290,37 @@ def create_heatmap_image(df):
                 # Creazione etichetta con ID multipli se necessario
                 id_string = ', '.join(map(str, sorted(risk_ids)))
                 
-                # Dimensionamento dinamico basato su numero di rischi
-                size = 200 + len(risk_ids) * 100
+                # Dimensionamento dinamico ottimizzato per cerchi compatti con testo leggibile
+                num_risks = len(risk_ids)
                 
-                # Aggiunta marcatore visuale
-                ax.scatter(x, y, s=size, c='black', edgecolors='white', 
-                          linewidth=2, zorder=10)
+                # Calcolo dimensione cerchio compatta con font più grande
+                char_count = len(id_string)
+                if char_count <= 2:  # Singolo ID (es. "1", "12")
+                    base_size = 55
+                    font_size = 10
+                elif char_count <= 5:  # Due ID (es. "1, 2")
+                    base_size = 80
+                    font_size = 9
+                elif char_count <= 8:  # Tre ID (es. "1, 2, 3")
+                    base_size = 115
+                    font_size = 8
+                else:  # Quattro o più ID
+                    base_size = 150
+                    font_size = 7
                 
-                # Etichetta testuale con ID
+                # Incremento proporzionale per rischi multipli
+                circle_size = base_size + (num_risks - 1) * 12
+                
+                # Creazione cerchio nero di sfondo identico alla versione web
+                circle = patches.Circle((x, y), radius=np.sqrt(circle_size)/40, 
+                                      facecolor='black', edgecolor='white', 
+                                      linewidth=2, zorder=10)
+                ax.add_patch(circle)
+                
+                # Etichetta testuale con ID - styling identico alla versione web
                 ax.text(x, y, id_string, ha='center', va='center', 
-                       color='white', fontweight='bold', fontsize=8, zorder=11)
+                       color='white', fontweight='bold', fontsize=font_size, 
+                       zorder=11)
         
         # Configurazione assi e layout
         ax.set_xlim(0, 5)
@@ -408,57 +429,26 @@ def create_pdf_report(df):
         # Preparazione dati tabella con intestazioni in ordine coerente con interfaccia AgGrid
         data = [['ID', 'Descrizione', 'Probabilità', 'Impatto', 'Priorità', 'Contromisura', 'Stato', 'Data Scadenza']]
 
-        # Popolamento righe dati con text wrapping intelligente e formattazione ottimizzata
+        # Popolamento righe dati con Paragraph per text wrapping automatico
         for _, row in df.iterrows():
-            # Descrizione con wrapping intelligente (max 50 caratteri per riga PDF)
+            # Descrizione completa con Paragraph per wrapping automatico
             desc = str(row['Descrizione']) if pd.notnull(row['Descrizione']) else ""
-            if len(desc) > 50:
-                # Spezza a circa 50 caratteri mantenendo parole intere
-                words = desc.split(' ')
-                lines = []
-                current_line = ""
-                for word in words:
-                    if len(current_line + " " + word) <= 50:
-                        current_line += (" " + word) if current_line else word
-                    else:
-                        if current_line:
-                            lines.append(current_line)
-                        current_line = word
-                if current_line:
-                    lines.append(current_line)
-                desc = "\n".join(lines[:2])  # Max 2 righe per PDF
-                if len(lines) > 2:
-                    desc += "..."
+            desc_paragraph = Paragraph(desc, styles['Normal'])
             
-            # Contromisura con wrapping simile
+            # Contromisura completa con Paragraph per wrapping automatico  
             desc_cont = str(row['Contromisura']) if pd.notnull(row['Contromisura']) else ""
-            if len(desc_cont) > 45:
-                words = desc_cont.split(' ')
-                lines = []
-                current_line = ""
-                for word in words:
-                    if len(current_line + " " + word) <= 45:
-                        current_line += (" " + word) if current_line else word
-                    else:
-                        if current_line:
-                            lines.append(current_line)
-                        current_line = word
-                if current_line:
-                    lines.append(current_line)
-                desc_cont = "\n".join(lines[:2])  # Max 2 righe
-                if len(lines) > 2:
-                    desc_cont += "..."
+            cont_paragraph = Paragraph(desc_cont, styles['Normal'])
 
-            # Aggiunta riga con ordine colonne coerente con AgGrid
+            # Aggiunta riga con Paragraph per colonne di testo lungo
             data.append([
                 str(row['ID']),
-                desc,
+                desc_paragraph,  # Paragraph per text wrapping automatico
                 f"{row['Probabilità']:.1f}",
                 f"{row['Impatto']:.1f}",
                 str(row['Priorità']),
-                desc_cont,
+                cont_paragraph,  # Paragraph per text wrapping automatico
                 str(row['Stato']),
-                str(row['Data scadenza'])  # Aggiunta colonna mancante
+                str(row['Data scadenza'])
             ])
 
         # Creazione e styling avanzato della tabella con larghezze ridotte per eliminare spazio vuoto
@@ -479,26 +469,29 @@ def create_pdf_report(df):
             ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke), 
             ('ALIGN', (0, 0), (-1, -1), 'CENTER'),             
             ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),   
-            ('FONTSIZE', (0, 0), (-1, 0), 9),                  # Font header ridotto per spazio
+            ('FONTSIZE', (0, 0), (-1, 0), 9),                  
             ('BOTTOMPADDING', (0, 0), (-1, 0), 12),            
             
-            # Contenuto styling
+            # Contenuto styling con auto-height
             ('FONTNAME', (0, 1), (-1, -1), 'Helvetica'),       
-            ('FONTSIZE', (0, 1), (-1, -1), 8),                 # Font contenuto ridotto
+            ('FONTSIZE', (0, 1), (-1, -1), 8),                 
             ('GRID', (0, 0), (-1, -1), 1, colors.black),       
-            ('VALIGN', (0, 0), (-1, -1), 'TOP'),               # Allineamento top per text wrapping
+            ('VALIGN', (0, 0), (-1, -1), 'TOP'),               
             
             # Allineamento specifico per colonne di testo
             ('ALIGN', (1, 1), (1, -1), 'LEFT'),               # Descrizione a sinistra
             ('ALIGN', (5, 1), (5, -1), 'LEFT'),               # Contromisura a sinistra
             
-            # Padding ottimizzato per text wrapping
-            ('LEFTPADDING', (0, 0), (-1, -1), 4),
-            ('RIGHTPADDING', (0, 0), (-1, -1), 4),
-            ('TOPPADDING', (0, 0), (-1, -1), 6),
-            ('BOTTOMPADDING', (0, 0), (-1, -1), 6),
+            # Padding ottimizzato per auto-height
+            ('LEFTPADDING', (0, 0), (-1, -1), 6),
+            ('RIGHTPADDING', (0, 0), (-1, -1), 6),
+            ('TOPPADDING', (0, 0), (-1, -1), 8),
+            ('BOTTOMPADDING', (0, 0), (-1, -1), 8),
         ])
         table.setStyle(table_style)
+        
+        # Rimozione dell'impostazione di altezza fissa per permettere auto-sizing
+        # Le righe si adatteranno automaticamente al contenuto
         elements.append(table)
 
         # Sezione riepilogo statistico
@@ -1313,8 +1306,7 @@ if not st.session_state.df.empty:
                     for col in [1, 3, 4, 5, 6, 8, 9]:
                         ws.cell(row=row_idx, column=col).alignment = Alignment(horizontal="center", vertical="center")
                     
-                    # Impostazione altezza riga per accommodare text wrapping su più righe
-                    ws.row_dimensions[row_idx].height = 60
+                    # Rimozione altezza fissa - permettiamo auto-sizing basato sul contenuto
                 
                 # ===========================
                 # AGGIUNTA HEAT MAP AL FOGLIO PRINCIPALE (gestione migliorata)
@@ -1461,7 +1453,7 @@ if not st.session_state.df.empty:
 st.markdown("---")
 st.markdown(
     "<div style='text-align: center; color: #64748b; font-size: 0.9em;'>"
-    "Dashboard Risk Assessment - Gestione professionale dei rischi di progetto"
+    "Dashboard Risk Assessment - Gestione professionale dei rischi di progetto - v1.1"
     "</div>", 
     unsafe_allow_html=True
 )
